@@ -1,0 +1,10 @@
+[Unit]
+Description=Hotdeal Bot Nightly Maintenance Job
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/hyeonbin/hotdeal_bot
+ExecStart=/home/hyeonbin/hotdeal_bot/.venv/bin/python /home/hyeonbin/hotdeal_bot/src/jobs/run_nightly.py
+Restart=no
+

@@ -1,0 +1,11 @@
+[Unit]
+Description=Run Hotdeal Tracker every 10 minutes
+
+[Timer]
+OnCalendar=*:0/10
+Persistent=true
+Unit=hotdeal-tracker.service
+
+[Install]
+WantedBy=timers.target
+

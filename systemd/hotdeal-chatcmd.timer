@@ -1,0 +1,11 @@
+[Unit]
+Description=Run Hotdeal Telegram command poll every minute
+
+[Timer]
+OnCalendar=*:0/1
+Persistent=true
+Unit=hotdeal-chatcmd.service
+
+[Install]
+WantedBy=timers.target
+

@@ -1,0 +1,11 @@
+[Unit]
+Description=Run Hotdeal Nightly at 23:50 KST
+
+[Timer]
+OnCalendar=*-*-* 23:50:00
+Persistent=true
+Unit=hotdeal-nightly.service
+
+[Install]
+WantedBy=timers.target
+

@@ -1,0 +1,11 @@
+[Unit]
+Description=Run Hotdeal Discovery every 30 minutes
+
+[Timer]
+OnCalendar=*:00,30
+Persistent=true
+Unit=hotdeal-discovery.service
+
+[Install]
+WantedBy=timers.target
+

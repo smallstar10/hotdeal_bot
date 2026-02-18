@@ -1,0 +1,10 @@
+[Unit]
+Description=Hotdeal Bot Telegram Command Job
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/hyeonbin/hotdeal_bot
+ExecStart=/home/hyeonbin/hotdeal_bot/.venv/bin/python /home/hyeonbin/hotdeal_bot/src/jobs/run_chat_commands.py
+Restart=no
+
