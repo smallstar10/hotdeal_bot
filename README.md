@@ -33,6 +33,12 @@ python src/jobs/run_tracker.py
 python src/jobs/run_nightly.py
 ```
 
+## 실행 스케줄(systemd user)
+- `hotdeal-chatcmd.timer`: 1분 간격 명령 처리
+- `hotdeal-tracker.timer`: 10분 간격 트래킹
+- `hotdeal-discovery.timer`: 30분 간격 후보 확장
+- `hotdeal-nightly.timer`: 23:50 야간 집계
+
 ## 주요 환경변수
 - `DATA_PROVIDER`: `algumon_rank`(무키) 또는 `coupang_affiliate`(API 키 필요)
 - `DISCOVERY_KEYWORDS`: 후보 탐색 키워드 목록
@@ -62,10 +68,18 @@ python src/jobs/run_nightly.py
 ./scripts/install_startup.sh
 ```
 
+상태 확인:
+```bash
+systemctl --user list-timers --all | grep hotdeal
+systemctl --user status hotdeal-tracker.timer --no-pager
+journalctl --user -u hotdeal-tracker.service -n 100 --no-pager
+```
+
 ## 운영 팁
 - Discovery 키워드는 넓게(생활/가전/식품 등), Tracker는 점수 기준으로 자동 좁혀집니다.
 - 초기 2~3일은 히스토리가 얕아서 오탐이 있을 수 있습니다.
 - `ALERT_SCORE_MIN`을 72~80 범위에서 조정하면 알림량을 빠르게 튜닝할 수 있습니다.
+- `PREFERRED_FOOD_KEYWORDS`, `PREFERRED_EVENT_KEYWORDS`를 다듬으면 체감 품질이 크게 좋아집니다.
 
 ## 텔레그램 명령어
 - `/키워드목록`
