@@ -1,11 +1,10 @@
 [Unit]
-Description=Run Hotdeal Discovery every 30 minutes
+Description=Run Hotdeal Discovery every 3 hours (06:00~21:00 KST)
 
 [Timer]
-OnCalendar=*:00,30
+OnCalendar=Mon..Sun *-*-* 06,09,12,15,18,21:00:00 Asia/Seoul
 Persistent=true
 Unit=hotdeal-discovery.service
 
 [Install]
 WantedBy=timers.target
-

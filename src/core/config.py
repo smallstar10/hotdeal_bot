@@ -19,6 +19,8 @@ class Settings:
     algumon_rank_url: str
     discovery_keywords: list[str]
     discovery_limit_per_keyword: int
+    discovery_summary_quiet_start_hour: int
+    discovery_summary_quiet_end_hour: int
     track_batch_size: int
     track_limit_per_keyword: int
     max_tracked_products: int
@@ -73,6 +75,8 @@ def load_settings() -> Settings:
         algumon_rank_url=os.getenv("ALGUMON_RANK_URL", "https://www.algumon.com/deal/rank"),
         discovery_keywords=keywords,
         discovery_limit_per_keyword=int(os.getenv("DISCOVERY_LIMIT_PER_KEYWORD", "40")),
+        discovery_summary_quiet_start_hour=max(0, min(23, int(os.getenv("DISCOVERY_SUMMARY_QUIET_START_HOUR", "0")))),
+        discovery_summary_quiet_end_hour=max(0, min(24, int(os.getenv("DISCOVERY_SUMMARY_QUIET_END_HOUR", "6")))),
         track_batch_size=int(os.getenv("TRACK_BATCH_SIZE", "180")),
         track_limit_per_keyword=int(os.getenv("TRACK_LIMIT_PER_KEYWORD", "50")),
         max_tracked_products=int(os.getenv("MAX_TRACKED_PRODUCTS", "2000")),

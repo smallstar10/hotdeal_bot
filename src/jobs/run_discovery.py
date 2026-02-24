@@ -61,6 +61,17 @@ def _load_tracked_examples(sqlite_path: str, n: int = 5) -> list[ProductQuote]:
     return out
 
 
+def _is_quiet_hour(hour: int, start_hour: int, end_hour: int) -> bool:
+    h = int(hour) % 24
+    start = int(start_hour) % 24
+    end = int(end_hour) % 24
+    if start == end:
+        return False
+    if start < end:
+        return start <= h < end
+    return h >= start or h < end
+
+
 def main() -> int:
     settings = load_settings()
     db.init_db(settings.sqlite_path)
@@ -136,8 +147,16 @@ def main() -> int:
         tracked_n = int(tracked["n"]) if tracked else 0
 
         display_items = inserted_examples if inserted_examples else _load_tracked_examples(settings.sqlite_path, 5)
-        msg = format_discovery_summary_with_items(ts, total_fetched, total_inserted, tracked_n, display_items)
-        notifier.send(msg)
+        if _is_quiet_hour(ts.hour, settings.discovery_summary_quiet_start_hour, settings.discovery_summary_quiet_end_hour):
+            logger.info(
+                "discovery summary skipped due quiet hour: hour=%s quiet=%s~%s",
+                ts.hour,
+                settings.discovery_summary_quiet_start_hour,
+                settings.discovery_summary_quiet_end_hour,
+            )
+        else:
+            msg = format_discovery_summary_with_items(ts, total_fetched, total_inserted, tracked_n, display_items)
+            notifier.send(msg)
         logger.info("discovery done: fetched=%s inserted=%s tracked=%s", total_fetched, total_inserted, tracked_n)
         return 0
     except Exception as exc:

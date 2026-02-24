@@ -36,13 +36,14 @@ python src/jobs/run_nightly.py
 ## 실행 스케줄(systemd user)
 - `hotdeal-chatcmd.timer`: 1분 간격 명령 처리
 - `hotdeal-tracker.timer`: 10분 간격 트래킹
-- `hotdeal-discovery.timer`: 30분 간격 후보 확장
+- `hotdeal-discovery.timer`: 3시간 간격 후보 확장 (`06:00/09:00/12:00/15:00/18:00/21:00`, KST)
 - `hotdeal-nightly.timer`: 23:50 야간 집계
 
 ## 주요 환경변수
 - `DATA_PROVIDER`: `algumon_rank`(무키) 또는 `coupang_affiliate`(API 키 필요)
 - `DISCOVERY_KEYWORDS`: 후보 탐색 키워드 목록
 - `DISCOVERY_LIMIT_PER_KEYWORD`: Discovery 수집 개수
+- `DISCOVERY_SUMMARY_QUIET_START_HOUR`, `DISCOVERY_SUMMARY_QUIET_END_HOUR`: Discovery 요약 텔레그램 전송 금지 시간대(기본 `00~06`)
 - `TRACK_BATCH_SIZE`: Tracker가 검사할 추적 대상 수
 - `ALERT_SCORE_MIN`: 알림 최소 점수
 - `ALERT_COOLDOWN_HOURS`: 동일 상품 재알림 대기 시간
